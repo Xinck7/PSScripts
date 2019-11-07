@@ -1,0 +1,12 @@
+#region Traffic analysis notes
+
+<#
+Turning on IP address resolution within Wireshark is generally sufficient to resolve most IPs. You could manually search for all the records using something like CentralOps, but it is significantly quicker to use the built-in resolver process. 
+This can be done under Edit > Preferences > Name Resolution and checking “Resolve network (IP) addresses and “Use an external network name resolver” options. If your capture also has DNS lookup information, you can turn on the “Use captured DNS packet data for address resolution” option as well.
+ 
+The server registry in this case is the Windows registry accessible using regedit. A search in there revealed the FTP entry noted below. This is often useful for tracking traffic/connections that do not appear to belong to any known application or process as many of them store their connection share/IPs in plain text within the registry. 
+
+Follow tcp stream on unmarked amazon ones and it should show more info like the host - ie sophosxlnet - which is an aws hosted sophos updater
+#>
+
+#endregion Traffic analysis notes

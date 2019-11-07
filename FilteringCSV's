@@ -1,0 +1,15 @@
+#Script for grabbing something from a whole bunch of CSV's and only grabbing unique values using select property
+#This was grabbing certain IP's from a firewall log for instance
+cd 'C:\Users\<user>\Desktop\Firewall logs local'
+$CSVFileList = Get-ChildItem -Recurse -Path .\
+
+Foreach($CSV in $CSVFileList)
+{
+    $ImportedCSV = Import-Csv -Path $CSV.fullname -Delimiter `" 
+    $FilteredCSV = $ImportedCSV |where -Property action -NE Drop
+    $CSVTable = $FilteredCSV | Select-Object -Property source -Unique
+    $IPlist += $CSVTable
+}
+
+$IPList | Select-Object -property source -unique > IPlist.txt
+ii IPlist.txt

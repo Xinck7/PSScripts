@@ -1,0 +1,176 @@
+#region TSQL Notes
+<#
+Best Queries are the smallest pulling for the need you want
+
+It is more efficient for resources in general to only pull the information you need all at once
+Iteration through filtering isn't as great for SQL (maybe in general could use measure commands to check)
+
+Use master;
+Go
+Create master key encryption by password = 'password'
+
+Go is like run
+; stops the command line - white space and CR's don't matter at all in the scripting area for SQL its reading just on the ;
+
+#
+Use products (which is a database table);
+Go
+Create database encryption key with algorithm = aes_128 encryption by server certificate [certificate];
+Go
+
+
+USE <table>
+DROP - like delete
+CREATE - make a table
+ALTER - change the table
+INSERT - change the things inside the table - new value
+UPDATE -  existing value in table
+SELECT - get values from database/table name
+
+Tables - attributes and tuples
+
+[]'s are the way to specify strings/groups together in SQL
+
+Also possible to always have these brackets and script tends to put the brackets in if that's the case
+White space doesn't matter only the ;'s matter in terminating the commands
+It also doesn't use it in the order written and there isn't a way to write it already "optimized" which it does on backend
+-- is a comment
+/*
+*/ is a comment block
+
+Single quotes are strings specifically
+Where - uses attributes of a table (column headers) 
+% is a wildcard in a string 
+
+Select distinct - this allows you to get uniques only in the 1 database rather than the normal union instead of union all which joins all fields together in that way
+
+Inner Join command combines the tables regardless where it matches only
+Outer join is when you want to have more information than that
+Left Right Full joins
+Overlap on the side for the circle venn diagram always or plus left part of table
+Can self-join a table when you want to have a relationship within the information of the actual table instead of just querying the data from the table directly 
+
+Can modify through update
+Update <table> set <values and their pairs> where <conditions met>
+Only can be the same values at that point - so for name changes not as relevant - all doctors maybe for instance would be a good place to use this to change titles
+
+If you don't specify a where clause it applies to the entire table
+
+
+
+No good way to move tables need to drop and create when you're moving location of the path
+Sectioning the hard drive partitions is a good idea so that you can backup specific tables
+
+Filegroup you cannot change after its created though which is a problem unless you plan how to do it
+
+When you backup as read-only if you wanna backup - then when you wanna archive you just turn on and off and you can use a command to do that
+
+Mdf -master
+Ldf - log files
+Extension - 2nds
+
+Forcing an empty file - DBCC - normally something you don't mess with - autogrow is something that this is facilitating - when you delete it doesn't go back to free space
+
+DBXX shrinkfile('filename', space by in number/% or emptyfile)
+
+Sets of Commands:
+DML - data manipulation Language
+Select
+Insert
+Update - as set 
+Delete
+DDL - data definition language
+Create 
+Alter
+Delete
+DCL - data control Language
+Grant
+Revoke
+Deny
+
+
+If you actually want a partition scheme then you need to do most of it by hand since its not really a big thing that people do
+
+Has Microsoft .net functions it seems to be able to call things in TSQL
+
+Select
+Getdate() as [date]
+Year(getdate()) as [year]
+Datename([month[], getdate()) as [month]
+Datename([weekday]getdate()));
+
+Select top(10) title,hiredate Date([day],90,hiredate) as review date 
+
+@@Error -> will show an exit code
+ERROR_Severity();
+0-10 information
+11-16 User error - u did a dumb
+17-24 Server side problem
+
+
+Where filters the select
+Having filters the group-by
+
+Finding data types are either a detective situation or you contact the creater of the database to check the data types for the tables used
+
+Can use this to find the information though
+**
+Exec sp_columns <table>
+**
+Type name is a good one and it has a column with the column name
+Int identity you can do like (1,1)
+Starts at 1 and increments by 1 - when deleted you don't get the position reclaimed.
+
+Create is ddl not dml
+Data defining language not manipulation language
+Create type  - name as a custom data type recognizable name
+
+Create type [c_state]
+From nchar(2)
+
+Drop table 
+
+Create table from it
+[state] c_state,
+
+
+#this causes it to be consistent for that data type instead of assuming everyone uses the same nomenclature
+
+Data type stays the same when you look at the sp_columns but it is showing as an alias and keeps the data consistent
+
+It’s a local thing so when you have more than 1 database you need to have some type of replication and actually put that onto another server
+
+Truly custom data types you can write in any .net like java or c# and then it will hook up to the sql part and use that as a library to know what to do and how to formulate the data with validation
+
+Casting also supported 
+Using #'s are for temporary tables
+Drop does what it sounds like - its there and then makes the stuff in ram then deletes when its does
+"Exec tempdb.sbs.sp_columns"
+This will show on the temp for the data type information
+
+Case
+	When … then…
+	Else
+	Is null … Is not null …
+	
+
+Coalesce() and select the fields you want - you can just get the certain aspect so you only need a few fields to compare against rather than the entirety of the field to say "where first value that isn't null"
+
+
+Begin Transaction
+…
+Commit Transaction
+or
+Rollback Transaction
+Can't rollback after commit happens
+SQL really doesn't have any type of undo buttons
+If you aren't careful with errors and transactions same risk as a normal query
+
+You can use a view to then have as a reference that you can use like a table
+You can then also encrypt the table no way to see it or decrypt it once that happens
+It will show the metadata if you have read access of the view
+So then you can hide the meta data seen of all the tables that is in use in the view
+You need to have that written somewhere on what the views are because you can't see it
+You can also use the ALTAR VIEW for an existing view in this case they added "with schemabinding, encryption"
+#>
+#endregion TSQL Notes
