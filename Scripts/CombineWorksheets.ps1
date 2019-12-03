@@ -36,7 +36,7 @@ while ($ExcelAllWorksheets.count -gt 1)
 }
 
 # Autofit the cells to view easier
-$Autofitrange = $FinalWorkSheet.range("A:H").columns
+$Autofitrange = $FinalWorkSheet.range("$StartTop : $StartEnd$lastRow1").columns
 $Autofitrange.autofit()
 $ExcelBook.SaveAs($ReportName)
 $ExcelBook.Close()
